@@ -1,0 +1,53 @@
+GET http://localhost:5000/categories
+
+###
+GET http://localhost:5000/categories/5f1958253a9bd83aa87b4564
+
+###
+POST http://localhost:5000/categories
+Content-Type: application/json
+
+{
+    "name": "Laptop"
+}
+
+###
+PATCH http://localhost:5000/categories/5f1958253a9bd83aa87b4564
+Content-Type: application/json
+
+{
+    "name": "sfgfs"
+}
+
+###
+DELETE http://localhost:5000/categories/5f196154b5257c46912640f0
+
+
+
+###
+GET http://localhost:5000/products
+
+###
+GET http://localhost:5000/products/5f195223c2f0cc2f3a46eed1
+
+###
+POST http://localhost:5000/products
+Content-Type: application/json
+
+{
+    "name": "Tesla XI",
+    "category": "Car",
+    "purchasePrice": 10000,
+    "sellPrice": 15000
+}
+
+###
+PATCH http://localhost:5000/products/5f195223c2f0cc2f3a46eed1
+Content-Type: application/json
+
+{
+    "category": "Mobile"
+}
+
+###
+DELETE http://localhost:5000/products/5f195223c2f0cc2f3a46eed1
