@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Category = require("../models/category");
 const Product = require("../models/product");
-const product = require("../models/product");
 
 // GET ALL
 router.get("/", async (req, res) => {
@@ -57,9 +56,9 @@ router.delete("/:id", getCategory, async (req, res) => {
   try {
     Product.find({ category: res.category.name }, (error, products) => {
       try {
-        products.forEach((product) => {
+        products.forEach(async (product) => {
           product.category = "Без категории";
-          product.save();
+          await product.save();
         });
         if (error) {
           throw new Error(error.message); //TODO: I'm not sure if it will work

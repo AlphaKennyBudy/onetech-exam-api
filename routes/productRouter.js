@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
+const Category = require("../models/category");
 
 // GET ALL
 router.get("/", async (req, res) => {
@@ -21,6 +22,7 @@ router.get("/:id", getProduct, (req, res) => {
 
 //POST ONE
 router.post("/", getProduct, async (req, res) => {
+  await findCategory(req);
   const product = new Product({
     name: req.body.name,
     category: req.body.category,
@@ -44,6 +46,7 @@ router.patch("/:id", getProduct, async (req, res) => {
     res.product.name = req.body.name;
   }
   if (req.body.category && req.body.category !== "") {
+    await findCategory(req);
     res.product.category = req.body.category;
   }
   if (req.body.purchasePrice) {
@@ -81,7 +84,7 @@ router.delete("/:id", getProduct, async (req, res) => {
 async function getProduct(req, res, next) {
   let product;
   try {
-    if (req.method === "POST") {
+    if (req.method === "POST" || (req.method === "PATCH" && req.body.name)) {
       product = await Product.find({ name: req.body.name });
       if (product.length) {
         return res.status(409).json({
@@ -103,6 +106,22 @@ async function getProduct(req, res, next) {
   }
   res.product = product;
   next();
+}
+
+function findCategory(req) {
+  Category.find({ name: req.body.category }, async (error, category) => {
+    if (!category.length) {
+      const newCategory = new Category({
+        name: req.body.category,
+      });
+      await newCategory.save();
+    }
+    if (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  });
 }
 
 module.exports = router;

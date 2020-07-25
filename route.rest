@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/categories/5f1c6ae5a675c711b9de02e4
+DELETE http://localhost:5000/categories/5f1c6ef0d13fb216b0d8cf9b
 
 
 
@@ -35,18 +35,18 @@ POST http://localhost:5000/products
 Content-Type: application/json
 
 {
-    "name": "Mac",
-    "category": "Laptop",
+    "name": "OnePlus",
+    "category": "Mobile",
     "purchasePrice": 10000,
     "sellPrice": 15000
 }
 
 ###
-PATCH http://localhost:5000/products/5f195223c2f0cc2f3a46eed1
+PATCH http://localhost:5000/products/5f1c70e2a43b8f187fa8e827
 Content-Type: application/json
 
 {
-    "category": "Mobile"
+    "name": "Mac"
 }
 
 ###
