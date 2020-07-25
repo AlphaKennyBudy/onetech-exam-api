@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/category");
+const Product = require("../models/product");
+const product = require("../models/product");
 
 // GET ALL
 router.get("/", async (req, res) => {
@@ -53,10 +55,31 @@ router.patch("/:id", getCategory, async (req, res) => {
 // DELETE ONE
 router.delete("/:id", getCategory, async (req, res) => {
   try {
-    await res.category.remove();
-    res.status(200).json({
-      message: "Deleted Category",
+    Product.find({ category: res.category.name }, (error, products) => {
+      try {
+        products.forEach((product) => {
+          product.category = "Без категории";
+          product.save();
+        });
+        if (error) {
+          throw new Error(error.message); //TODO: I'm not sure if it will work
+        }
+      } catch (error) {
+        res.status(500).json({
+          message: error.message,
+        });
+      }
     });
+    if (res.category.name === "Без категории") {
+      res.status(403).json({
+        message: "Вы не можете удалить эту категорию!",
+      });
+    } else {
+      await res.category.remove();
+      res.status(200).json({
+        message: "Категория удалена!",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -73,7 +96,7 @@ async function getCategory(req, res, next) {
       category = await Category.find({ name: req.body.name });
       if (category.length) {
         return res.status(409).json({
-          message: "There is already such category",
+          message: "Такая категория уже существует!",
         });
       }
     } else {
@@ -81,7 +104,7 @@ async function getCategory(req, res, next) {
     }
     if (!category) {
       return res.status(404).json({
-        message: "Cannot find category",
+        message: "Не могу найти категорию!",
       });
     }
   } catch (error) {

@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/categories/5f196154b5257c46912640f0
+DELETE http://localhost:5000/categories/5f1c6ae5a675c711b9de02e4
 
 
 
@@ -35,8 +35,8 @@ POST http://localhost:5000/products
 Content-Type: application/json
 
 {
-    "name": "Tesla XI",
-    "category": "Car",
+    "name": "Mac",
+    "category": "Laptop",
     "purchasePrice": 10000,
     "sellPrice": 15000
 }

@@ -67,7 +67,7 @@ router.delete("/:id", getProduct, async (req, res) => {
   try {
     await res.product.remove();
     res.status(200).json({
-      message: "Deleted Product",
+      message: "Продукт удален!",
     });
   } catch (error) {
     res.status(500).json({
@@ -85,7 +85,7 @@ async function getProduct(req, res, next) {
       product = await Product.find({ name: req.body.name });
       if (product.length) {
         return res.status(409).json({
-          message: "There is already such product",
+          message: "Такой продукт уже существует!",
         });
       }
     } else {
@@ -93,7 +93,7 @@ async function getProduct(req, res, next) {
     }
     if (!product) {
       return res.status(404).json({
-        message: "Cannot find product",
+        message: "Не могу найти продукт!",
       });
     }
   } catch (error) {
