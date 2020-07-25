@@ -84,7 +84,7 @@ router.delete("/:id", getProduct, async (req, res) => {
 async function getProduct(req, res, next) {
   let product;
   try {
-    if (req.method === "POST" || (req.method === "PATCH" && req.body.name)) {
+    if (req.method === "POST") {
       product = await Product.find({ name: req.body.name });
       if (product.length) {
         return res.status(409).json({
